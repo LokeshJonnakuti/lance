@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import secrets
 import warnings
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -47,7 +48,6 @@ from .lance import CompactionMetrics as CompactionMetrics
 from .lance import __version__ as __version__
 from .optimize import Compaction
 from .util import td_to_micros
-import secrets
 
 try:
     import pandas as pd

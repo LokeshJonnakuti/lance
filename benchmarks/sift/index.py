@@ -20,8 +20,6 @@ import time
 from subprocess import check_output
 
 import lance
-import numpy as np
-import pyarrow as pa
 
 
 def main():
@@ -29,7 +27,9 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument("uri", help="lance path", metavar="FILE")
-    parser.add_argument("-t", "--index-type", choices=["ivf_pq", "diskann"], default="ivf_pq")
+    parser.add_argument(
+        "-t", "--index-type", choices=["ivf_pq", "diskann"], default="ivf_pq"
+    )
     parser.add_argument("-m", "--metric", choices=["l2", "cosine"], default="l2")
     parser.add_argument(
         "-c",

@@ -13,6 +13,7 @@
 
 
 """Tests for predicate pushdown"""
+import secrets
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
@@ -25,7 +26,6 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
 from lance.vector import vec_to_table
-import secrets
 
 
 def create_table(nrows=100):
