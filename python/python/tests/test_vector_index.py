@@ -23,6 +23,7 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
 from lance.vector import vec_to_table
+import math
 
 
 def create_table(nvec=1000, ndim=128):
@@ -500,9 +501,7 @@ def test_index_cache_size(tmp_path):
     assert (
         indexed_dataset.stats.index_stats("vector_idx")["index_cache_entry_count"] == 2
     )
-    assert (
-        indexed_dataset.stats.index_stats("vector_idx")["index_cache_hit_rate"] == 0.5
-    )
+    assert math.isclose(indexed_dataset.stats.index_stats("vector_idx")["index_cache_hit_rate"], 0.5, rel_tol=1e-09, abs_tol=0.0)
     query_index(indexed_dataset, 128)
     assert (
         indexed_dataset.stats.index_stats("vector_idx")["index_cache_entry_count"] == 10
