@@ -11,6 +11,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+import secrets
 import string
 
 import lance
@@ -18,7 +19,6 @@ import numpy as np
 import pyarrow as pa
 import pytest
 from lance.vector import vec_to_table
-import secrets
 
 
 def create_table(nvec=1000, ndim=128):
@@ -26,7 +26,9 @@ def create_table(nvec=1000, ndim=128):
     price = np.random.rand(nvec) * 100
 
     def gen_str(n):
-        return "".join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=n))
+        return "".join(
+            secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=n)
+        )
 
     meta = np.array([gen_str(100) for _ in range(nvec)])
     tbl = (

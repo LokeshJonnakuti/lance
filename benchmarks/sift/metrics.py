@@ -29,8 +29,12 @@ def recall(actual_sorted: np.ndarray, results: np.ndarray):
     Recall-at-k
     """
     len = results.shape[1]
-    recall_at_k = np.array([np.sum([1 if id in results[i, :] else 0 for id in row]) * 1.0 / len
-                            for i, row in enumerate(actual_sorted)])
+    recall_at_k = np.array(
+        [
+            np.sum([1 if id in results[i, :] else 0 for id in row]) * 1.0 / len
+            for i, row in enumerate(actual_sorted)
+        ]
+    )
     return (recall_at_k.mean(), recall_at_k.std(), recall_at_k)
 
 

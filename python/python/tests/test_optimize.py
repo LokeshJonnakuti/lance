@@ -13,6 +13,7 @@
 #  limitations under the License.
 import pickle
 import re
+import secrets
 from pathlib import Path
 
 import lance
@@ -21,7 +22,6 @@ import pyarrow as pa
 from lance.lance import Compaction
 from lance.optimize import RewriteResult
 from lance.vector import vec_to_table
-import secrets
 
 
 def test_dataset_optimize(tmp_path: Path):
