@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import json
 import os
-import random
 import warnings
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -48,6 +47,7 @@ from .lance import CompactionMetrics as CompactionMetrics
 from .lance import __version__ as __version__
 from .optimize import Compaction
 from .util import td_to_micros
+import secrets
 
 try:
     import pandas as pd
@@ -426,7 +426,7 @@ class LanceDataset(pa.dataset.Dataset):
         table : Table
         """
         total_num_rows = self.count_rows()
-        indices = random.sample(range(total_num_rows), num_rows)
+        indices = secrets.SystemRandom().sample(range(total_num_rows), num_rows)
         if not randomize_order:
             # Sort the indices in order to increase the locality and thus reduce
             # the number of random reads.

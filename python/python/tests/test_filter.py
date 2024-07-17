@@ -13,8 +13,6 @@
 
 
 """Tests for predicate pushdown"""
-
-import random
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
@@ -27,6 +25,7 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
 from lance.vector import vec_to_table
+import secrets
 
 
 def create_table(nrows=100):
@@ -41,10 +40,10 @@ def create_table(nrows=100):
         ],
         names=["bool", "date", "dt"],
     )
-    random.seed(42)
+    secrets.SystemRandom().seed(42)
 
     def gen_str(n):
-        return "".join(random.choices("abc", k=n))
+        return "".join(secrets.SystemRandom().choices("abc", k=n))
 
     string_col = pa.array([gen_str(2) for _ in range(nrows)])
 
@@ -206,7 +205,7 @@ def create_table_for_duckdb(nvec=10000, ndim=768):
     price = (np.random.rand(nvec) + 1) * 100
 
     def gen_str(n):
-        return "".join(random.choices("abc"))
+        return "".join(secrets.SystemRandom().choices("abc"))
 
     meta = np.array([gen_str(1) for _ in range(nvec)])
     tbl = (
