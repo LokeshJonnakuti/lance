@@ -12,6 +12,7 @@
 #  limitations under the License.
 
 import platform
+import secrets
 import string
 import time
 from pathlib import Path
@@ -22,7 +23,6 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
 from lance.vector import vec_to_table
-import secrets
 
 
 def create_table(nvec=1000, ndim=128):
@@ -30,7 +30,9 @@ def create_table(nvec=1000, ndim=128):
     price = np.random.rand(nvec) * 100
 
     def gen_str(n):
-        return "".join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=n))
+        return "".join(
+            secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=n)
+        )
 
     meta = np.array([gen_str(100) for _ in range(nvec)])
     tbl = (

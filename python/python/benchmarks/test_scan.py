@@ -11,13 +11,13 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+import secrets
 from pathlib import Path
 
 import lance
 import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
-import secrets
 
 NUM_ROWS = 10_000
 
@@ -70,7 +70,8 @@ def sample_dataset(tmpdir_factory):
             ),
             "blob": pa.array(
                 [
-                    secrets.choice([
+                    secrets.choice(
+                        [
                             secrets.SystemRandom().randbytes(100 * 1024),
                             secrets.SystemRandom().randbytes(100 * 1024),
                             secrets.SystemRandom().randbytes(100 * 1024),
