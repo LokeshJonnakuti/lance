@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 import pickle
-import random
 import re
 from pathlib import Path
 
@@ -22,6 +21,7 @@ import pyarrow as pa
 from lance.lance import Compaction
 from lance.optimize import RewriteResult
 from lance.vector import vec_to_table
+import secrets
 
 
 def test_dataset_optimize(tmp_path: Path):
@@ -66,7 +66,7 @@ def test_index_remapping(tmp_path: Path):
     )
     assert len(dataset.get_fragments()) == 2
 
-    sample_query_indices = random.sample(range(300), 50)
+    sample_query_indices = secrets.SystemRandom().sample(range(300), 50)
     vecs = data.column("vector").chunk(0)
     sample_queries = [
         {"column": "vector", "q": vecs[i].values, "k": 5} for i in sample_query_indices

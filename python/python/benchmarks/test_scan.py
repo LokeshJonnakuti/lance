@@ -11,13 +11,13 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-import random
 from pathlib import Path
 
 import lance
 import pyarrow as pa
 import pyarrow.compute as pc
 import pytest
+import secrets
 
 NUM_ROWS = 10_000
 
@@ -28,11 +28,11 @@ NUM_ROWS = 10_000
         lambda: pa.array(range(NUM_ROWS), type=pa.int32()),
         lambda: pc.random(NUM_ROWS),
         lambda: pa.array(
-            [random.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
+            [secrets.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
             type=pa.string(),
         ),
         lambda: pa.array(
-            [random.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
+            [secrets.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
             type=pa.dictionary(pa.int8(), pa.string()),
         ),
         lambda: pa.FixedSizeListArray.from_arrays(
@@ -62,7 +62,7 @@ def sample_dataset(tmpdir_factory):
             "i": pa.array(range(NUM_ROWS), type=pa.int32()),
             "f": pc.random(NUM_ROWS).cast(pa.float32()),
             "s": pa.array(
-                [random.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
+                [secrets.choice(["hello", "world", "today"]) for _ in range(NUM_ROWS)],
                 type=pa.string(),
             ),
             "fsl": pa.FixedSizeListArray.from_arrays(
@@ -70,11 +70,10 @@ def sample_dataset(tmpdir_factory):
             ),
             "blob": pa.array(
                 [
-                    random.choice(
-                        [
-                            random.randbytes(100 * 1024),
-                            random.randbytes(100 * 1024),
-                            random.randbytes(100 * 1024),
+                    secrets.choice([
+                            secrets.SystemRandom().randbytes(100 * 1024),
+                            secrets.SystemRandom().randbytes(100 * 1024),
+                            secrets.SystemRandom().randbytes(100 * 1024),
                         ]
                     )
                     for _ in range(NUM_ROWS)
