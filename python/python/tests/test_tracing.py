@@ -11,7 +11,9 @@ from security import safe_command
 
 def test_tracing():
     trace_files_before = set(glob.glob("trace-*.json"))
-    safe_command.run(subprocess.run, [
+    safe_command.run(
+        subprocess.run,
+        [
             sys.executable,
             "-c",
             "from lance.tracing import trace_to_chrome; trace_to_chrome()",
@@ -28,7 +30,9 @@ def test_tracing():
     some_uuid = uuid.uuid4()
     trace_name = f"{some_uuid}.json"
 
-    safe_command.run(subprocess.run, [
+    safe_command.run(
+        subprocess.run,
+        [
             sys.executable,
             "-c",
             "from lance.tracing import trace_to_chrome;"
